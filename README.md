@@ -42,12 +42,9 @@ It uses the "fitz" module from PyMuPDF to open, modify, and save PDFs:
 ``import os`` <br>
 ``import fitz`` <br>
 ``def add_measurements_to_pdf(input_pdf, output_pdf, measurements):`` <br>
-Continue with the code as specified in the codebase---
 
-``pdf_document = fitz.open(input_pdf)`` <br>
-``page = pdf_document[0]`` <br>
-``x, y = 55, 515`` <br>
-``font_size = 10 ``
+See add_measurements.py file for the rest of the code.
+
 
 # Example Output
 The script will create new PDF files with the prefix "updated_" , like:
