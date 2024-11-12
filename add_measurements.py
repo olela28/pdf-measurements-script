@@ -50,11 +50,13 @@ def process_pdfs(input_directory, output_directory):
         # Check the product name to decide which measurements to add
         if "TEASTAR" in filename.upper() or "BAG@100" in filename.upper():
             measurements = "Size                                                            1 BAG@100 GR"
-        elif "CADDY" in filename:
+        elif "CASE = 5 x 15" in filename:
+            measurements = "Size                                                            5x15 BAGS"
+        elif "CASE = 5 x 20" in filename:
             measurements = "Size                                                            5x20 BAGS"
         elif "LEAFCUP" in filename:
             measurements = "Size                                                            1 TEABAG, CASE = 90 BAGS"
-        elif "BAG@250" in filename:
+        elif "BAG@250" in filename or "BAG@ 250 GR" in filename:
             measurements = "Size                                                            1 BAG@250 GR"
         else:
             continue  # Skip files that don't match
