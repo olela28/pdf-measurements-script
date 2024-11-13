@@ -20,11 +20,11 @@ def add_measurements_to_pdf(input_pdf, output_pdf, measurements):
     # If the "Declaration" block was found, position "Size" directly below it
     if declaration_block:
         # Position below the "Declaration" block
-        y = declaration_block[3] + 15  # Start below the Declaration text
-        x_key = declaration_block[0]   # Align "Size" with "Declaration" key's x position
+        y = declaration_block[3] + 15 # Start below the Declaration text
+        x_key = declaration_block[0] # Align "Size" with "Declaration" key's x position
 
         # Offset for the value to align it with other values
-        x_value = declaration_block[2] + 10  # Fine-tune as needed
+        x_value = declaration_block[2] + 12 # Fine-tune as needed
 
         font_size = 10
 
@@ -32,42 +32,40 @@ def add_measurements_to_pdf(input_pdf, output_pdf, measurements):
         size_text = "Size"
         page.insert_text((x_key, y), size_text, fontsize=font_size, color=(0, 0, 0))
 
-        # Insert the measurement value at the calculated x_value position
+        # Insert the measurement valuee at the calculated x_value position
         remaining_text = measurements.split("Size")[1].strip()
-        page.insert_text((x_value, y), remaining_text, fontsize=font_size, color=(0, 0, 0))
+        page.insert_text((x_value, y), remaining_text, fontsize=font_size)
 
-    # Save the updated PDF
+    # Save the updated PDF files
     pdf_document.save(output_pdf)
     pdf_document.close()
 
-def process_pdfs(input_directory, output_directory): 
+def process_pdfs(input_directory, output_directory):
     # Create the output directory if it doesn't exist
     os.makedirs(output_directory, exist_ok=True)
-
+    
     for filename in os.listdir(input_directory):
         input_path = os.path.join(input_directory, filename)
 
         # Check the product name to decide which measurements to add
-        if "TEASTAR" in filename.upper() or "BAG@100" in filename.upper():
-            measurements = "Size                                                            1 BAG@100 GR"
-        elif "CASE = 5 x 15" in filename:
-            measurements = "Size                                                            5x15 BAGS"
-        elif "CASE = 5 x 20" in filename:
-            measurements = "Size                                                            5x20 BAGS"
+        if "Teastar" in filename.upper() or "BAG@100" in filename.upper():
+            measurements = "Size    1 BAG@100 GR"
+        elif "CADDY" in filename:
+            measurements = "Size    5x20 BAGS"
         elif "LEAFCUP" in filename:
-            measurements = "Size                                                            1 TEABAG, CASE = 90 BAGS"
-        elif "BAG@250" in filename or "BAG@ 250 GR" in filename:
-            measurements = "Size                                                            1 BAG@250 GR"
+            measurements = "Size    1 TEABAG, CASE = 90 BAGS"
+        elif "BAG@250" in filename:
+            measurements = "Size    1 BAG@250 GR"
         else:
-            continue  # Skip files that don't match
+            continue    #Skip files that don't match
 
-        # Define output path in the specified output directory
-        output_path = os.path.join(output_directory, f"updated_{filename}")
+            # Define output path in the specified output directory
+            output_path = os.path.join(output_directory, f"updated_{filename}")
 
-        # Add measurements to the PDF
-        add_measurements_to_pdf(input_path, output_path, measurements)
+            # Add measurements to the PDF
+            add_measurements_to_pdf(input_path, output_path, measurements)
 
-# Specify the input and output directories
-input_pdf_directory = "C:/Users/lao/Desktop/automation/pdf_files"  # Location of input PDFs
-output_pdf_directory = "C:/Users/lao/Desktop/automation/updated_files"  # Location for updated PDFs
-process_pdfs(input_pdf_directory, output_pdf_directory)
+    # Specify the input and output directories
+    input_pdf_directory = "C:/Users/lao/Desktop/automation/pdf_files" # Location of input PDFs
+    output_pdf_directory = "C:/Users/lao/Desktop/automation/updated_files" # Location for updated PDFs
+    process_pdfs(input_pdf_directory, output_pdf_directory)
